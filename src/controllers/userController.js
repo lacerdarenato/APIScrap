@@ -39,7 +39,7 @@ module.exports = {
         res.json(gitResponse.data)
       })
       .catch((err) => {
-        res.json({ msg: `Users details not found! ${err}` })
+        res.json({ msg: `Users repositories not found! ${err}` })
       })
   }
 }
