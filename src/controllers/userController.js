@@ -1,13 +1,15 @@
-exports.post = (req, res, next) => {
-  res.status(201).send('Requisição recebida com sucesso!');
-};
+const axios = require('axios');
 
-exports.put = (req, res, next) => {
-  let id = req.params.id;
-  res.status(201).send(`Requisição recebida com sucesso! ${id}`);
-};
+module.exports = {
+  async getAllUsersSince(req, res) {
+    const { since } = req.query;
 
-exports.delete = (req, res, next) => {
-  let id = req.params.id;
-  res.status(200).send(`Requisição recebida com sucesso! ${id}`);
-};
+    await axios.get('https://api.github.com/users' + `?since=${since}`)
+      .then(function (gitResponse) {
+        res.json(gitResponse.data)
+      })
+      .catch((err) => {
+        res.json({ msg: `Users not found! ${err}` })
+      })
+  }
+}
