@@ -6,10 +6,15 @@ module.exports = {
 
     await axios.get('https://api.github.com/users' + `?since=${since}`)
       .then(function (gitResponse) {
-        res.json(gitResponse.data)
+        const usersList = {
+          list: gitResponse.data,
+          nextPage: gitResponse.headers.link.split(';')[0].slice(1, -1)
+        }
+        res.json(usersList)
       })
       .catch((err) => {
         res.json({ msg: `Users not found! ${err}` })
       })
+    
   }
 }
